@@ -69,7 +69,6 @@ model Career {
   roadmapSteps       RoadmapStep[]
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt
-  userRoadmaps       UserRoadmap[]
 }
 
 model RoadmapStep {
