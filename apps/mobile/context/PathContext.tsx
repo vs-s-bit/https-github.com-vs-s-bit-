@@ -15,6 +15,7 @@ type PathState={
  setPracticeScore:(score:number)=>void;
  startProject:()=>void;
  completeProject:()=>void;
+ completePortfolio:()=>void;
 };
 
 const Context=createContext<PathState|undefined>(undefined);
