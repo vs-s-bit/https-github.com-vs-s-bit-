@@ -1,10 +1,12 @@
+import React from "react";
 import {router} from "expo-router";
 import {Pressable,ScrollView,StyleSheet,Text,TextInput,View} from "react-native";
 import {usePath} from "../context/PathContext";
 import {BottomNav} from "../components/BottomNav";
 
 export default function Portfolio(){
- const {portfolioCompleted,completePortfolio}=usePath();
+ const {portfolioCompleted,portfolioSummary,completePortfolio}=usePath();
+ const [summary,setSummary]=React.useState(portfolioSummary);
  return <View style={s.screen}><ScrollView contentContainerStyle={s.c}>
   <Text style={s.eyebrow}>PORTFOLIO EVIDENCE</Text>
   <Text style={s.title}>Turn your project into proof.</Text>
@@ -12,9 +14,9 @@ export default function Portfolio(){
   <View style={s.card}>
    <Text style={s.label}>PROJECT</Text><Text style={s.project}>First Dataset Analysis</Text>
    <Text style={s.label}>YOUR SUMMARY</Text>
-   <TextInput multiline placeholder="Example: I cleaned a small dataset, compared categories and found two useful patterns..." placeholderTextColor="#94A3B8" style={s.input}/>
+   <TextInput value={summary} onChangeText={setSummary} multiline placeholder="Example: I cleaned a small dataset, compared categories and found two useful patterns..." placeholderTextColor="#94A3B8" style={s.input}/>
    <Text style={s.hint}>Keep it factual. PATH should never invent achievements or skills for you.</Text>
-   {portfolioCompleted?<View style={s.success}><Text style={s.successTitle}>✓ PORTFOLIO EVIDENCE SAVED</Text><Text style={s.successText}>This project now counts as evidence for your Data Analysis skill.</Text></View>:<Pressable onPress={completePortfolio} style={s.button}><Text style={s.buttonText}>Save evidence</Text></Pressable>}
+   {portfolioCompleted?<View style={s.success}><Text style={s.successTitle}>✓ PORTFOLIO EVIDENCE SAVED</Text><Text style={s.successText}>This project now counts as evidence for your Data Analysis skill.</Text></View>:<Pressable disabled={!summary.trim()} onPress={()=>completePortfolio(summary)} style={s.button}><Text style={s.buttonText}>Save evidence</Text></Pressable>}
   </View>
   <Pressable onPress={()=>router.push("/skills")} style={s.link}><Text style={s.linkText}>View Skill Passport →</Text></Pressable>
  </ScrollView><BottomNav/></View>
