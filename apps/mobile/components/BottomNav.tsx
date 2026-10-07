@@ -1,0 +1,4 @@
+import {router,usePathname} from "expo-router";import{Pressable,StyleSheet,Text,View}from"react-native";
+const items=[["/","HOME"],["/recommendations","DISCOVER"],["/path-builder","MY PATH"],["/practice","PRACTICE"],["/profile","PROFILE"]] as const;
+export function BottomNav(){const pathname=usePathname();return <View style={s.bar}>{items.map(([href,label])=><Pressable key={href} onPress={()=>router.push(href)} style={s.item}><Text style={[s.label,pathname===href&&s.active]}>{label}</Text></Pressable>)}</View>}
+const s=StyleSheet.create({bar:{position:"absolute",bottom:0,left:0,right:0,height:68,backgroundColor:"#FFF",borderTopWidth:1,borderTopColor:"#E2E8F0",flexDirection:"row",paddingBottom:8},item:{flex:1,justifyContent:"center",alignItems:"center"},label:{fontSize:10,fontWeight:"700",color:"#64748B"},active:{color:"#2563EB"}});
