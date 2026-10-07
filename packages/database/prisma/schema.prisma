@@ -67,6 +67,7 @@ model Career {
   lastVerifiedAt     DateTime?
   nextReviewAt       DateTime?
   roadmapSteps       RoadmapStep[]
+  userRoadmaps       UserRoadmap[]
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt
 }
