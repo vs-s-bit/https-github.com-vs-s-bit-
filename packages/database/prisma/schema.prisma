@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStage {
+  TEN
+  TWELVE
+  COLLEGE
+  GRADUATE
+  WORKING
+}
+
+enum RoadmapStepType {
+  LEARN
+  PRACTICE
+  PROJECT
+  ASSESSMENT
+  PORTFOLIO
+  INTERVIEW
+  APPLICATION
+  MILESTONE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Profile?
+}
+
+model Profile {
+  id                 String    @id @default(cuid())
+  userId             String    @unique
+  stage              UserStage
+  location           String?
+  language           String    @default("EN")
+  careerGoal         String?
+  dailyStudyMinutes  Int       @default(60)
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model Career {
+  id                 String        @id @default(cuid())
+  name               String
+  slug               String        @unique
+  category           String
+  shortDescription   String
+  description        String
+  beginnerExplanation String
+  requiredEducation  String
+  difficulty         String?
+  preparationTime    String?
+  source             String?
+  sourceUrl          String?
+  lastVerifiedAt     DateTime?
+  nextReviewAt       DateTime?
+  roadmapSteps       RoadmapStep[]
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+}
+
+model RoadmapStep {
+  id                 String          @id @default(cuid())
+  careerId           String
+  title              String
+  description        String
+  type               RoadmapStepType
+  order              Int
+  estimatedMinutes   Int
+  estimatedDays      Int?
+  prerequisites      Json
+  resources          Json
+  completionCriteria String
+  career             Career          @relation(fields: [careerId], references: [id], onDelete: Cascade)
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  @@unique([careerId, order])
+  @@index([careerId, type])
+}
