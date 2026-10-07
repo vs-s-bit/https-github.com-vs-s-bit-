@@ -9,6 +9,7 @@ type PathState={
  practiceScore:number|null;
  projectStarted:boolean;
  projectCompleted:boolean;
+ portfolioCompleted:boolean;
  skills:SkillProgress[];
  completeStep:(id:string)=>void;
  setPracticeScore:(score:number)=>void;
@@ -31,6 +32,7 @@ export function PathProvider({children}:{children:React.ReactNode}){
  const[practiceScore,setPracticeScore]=useState<number|null>(null);
  const[projectStarted,setProjectStarted]=useState(false);
  const[projectCompleted,setProjectCompleted]=useState(false);
+ const[portfolioCompleted,setPortfolioCompleted]=useState(false);
  const[skills,setSkills]=useState<SkillProgress[]>(initialSkills);
 
  const completeStep=(id:string)=>{
@@ -45,6 +47,8 @@ export function PathProvider({children}:{children:React.ReactNode}){
 
  const startProject=()=>setProjectStarted(true);
 
+ const completePortfolio=()=>{setPortfolioCompleted(true);completeStep("portfolio");};
+
  const completeProject=()=>{
   setProjectStarted(true);
   setProjectCompleted(true);
@@ -52,7 +56,7 @@ export function PathProvider({children}:{children:React.ReactNode}){
   setSkills(current=>current.map(skill=>skill.name==="Data Analysis"?{...skill,level:"INTERMEDIATE",evidence:["First dataset analysis"]}:skill));
  };
 
- const value=useMemo(()=>({careerName,completed,practiceScore,projectStarted,projectCompleted,skills,completeStep,setPracticeScore,startProject,completeProject}),[careerName,completed,practiceScore,projectStarted,projectCompleted,skills]);
+ const value=useMemo(()=>({careerName,completed,practiceScore,projectStarted,projectCompleted,portfolioCompleted,skills,completeStep,setPracticeScore,startProject,completeProject,completePortfolio}),[careerName,completed,practiceScore,projectStarted,projectCompleted,portfolioCompleted,skills]);
  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
