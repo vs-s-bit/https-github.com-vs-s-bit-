@@ -2,7 +2,7 @@ import {ScrollView,StyleSheet,Text,View} from "react-native";
 import {usePath,SkillLevel} from "../context/PathContext";
 import {BottomNav} from "../components/BottomNav";
 
-const labels:Record<SkillLevel,string>={NOT_STARTED:"Not started",BEGINNER:"Beginner",INTERMEDIATE:"Intermediate",ADVANCED:"Advanced"};
+const labels:Record<SkillLevel,string>={NOT_STARTED:"Not started",BEGINNER:"Beginner",INTERMEDIATE:"Intermediate",ADVANCED:"Advanced",VERIFIED:"Verified"};
 
 export default function Skills(){
  const {skills}=usePath();
@@ -14,7 +14,7 @@ export default function Skills(){
   <View style={s.summary}><Text style={s.summaryBig}>{skills.filter(x=>x.level!=="NOT_STARTED").length}</Text><Text style={s.summaryText}>skills started</Text><Text style={s.summaryEvidence}>{evidenceCount} evidence item</Text></View>
   {skills.map(skill=><View key={skill.name} style={s.card}>
    <View style={s.row}><View style={s.flex}><Text style={s.name}>{skill.name}</Text><Text style={s.level}>{labels[skill.level]}</Text></View><View style={[s.dot,skill.level!=="NOT_STARTED"&&s.activeDot]}><Text style={s.dotText}>{skill.level==="NOT_STARTED"?"—":"✓"}</Text></View></View>
-   <View style={s.track}><View style={[s.fill,{width:skill.level==="NOT_STARTED"?"0%":skill.level==="BEGINNER"?"35%":skill.level==="INTERMEDIATE"?"65%":"90%"}]}/></View>
+   <View style={s.track}><View style={[s.fill,{width:skill.level==="NOT_STARTED"?"0%":skill.level==="BEGINNER"?"35%":skill.level==="INTERMEDIATE"?"65%":skill.level==="ADVANCED"?"90%":"100%"}]}/></View>
    {skill.evidence.length>0?<Text style={s.evidence}>Evidence: {skill.evidence.join(", ")}</Text>:<Text style={s.muted}>Complete lessons and projects to build evidence.</Text>}
   </View>)}
   <View style={s.note}><Text style={s.noteTitle}>What “proof” means</Text><Text style={s.noteText}>A completed lesson shows learning. A completed project adds evidence. Future PATH versions can add assessments, mentor review or employer verification before a skill becomes VERIFIED.</Text></View>
