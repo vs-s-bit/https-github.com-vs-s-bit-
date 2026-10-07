@@ -1,0 +1,12 @@
+{
+  "expo":{
+    "name":"PATH",
+    "slug":"path-career-navigation",
+    "scheme":"path",
+    "version":"0.1.0",
+    "orientation":"portrait",
+    "userInterfaceStyle":"automatic",
+    "plugins":["expo-router"],
+    "experiments":{"typedRoutes":true}
+  }
+}
